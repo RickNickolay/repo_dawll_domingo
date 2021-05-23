@@ -63,6 +63,15 @@ public class AlumnoController {
 		}
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<List<Alumno>> buscar(@PathVariable("id") String dni){
+		log.info(">>>> busca por dni " + dni);
+		List<Alumno> optAlumno = service.listaPorDni(dni);
+		return ResponseEntity.ok(optAlumno);
+	
+	}
+	
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Alumno> elimina(@PathVariable("id") int idAlumno){
 		log.info(">>>> elimina " + idAlumno);
@@ -76,6 +85,8 @@ public class AlumnoController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
+	
+	
 	
 	
 }
