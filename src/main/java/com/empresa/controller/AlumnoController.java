@@ -5,7 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,4 +62,20 @@ public class AlumnoController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Alumno> elimina(@PathVariable("id") int idAlumno){
+		log.info(">>>> elimina " + idAlumno);
+		Optional<Alumno> optAlumno = service.obtienePorId(idAlumno);
+		if(optAlumno.isPresent()) {
+			service.eliminaAlumno(idAlumno);
+			return ResponseEntity.ok(optAlumno.get());
+		}
+		else {
+			log.info(">>>> no existe el ID");
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	
+	
 }
